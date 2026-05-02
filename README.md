@@ -62,6 +62,58 @@ curl -s -X POST -H "Content-Type: application/json" \
 
 Returns log-softmax → `class_id` + `class_name` + `proba` per row.
 
+## TL-Transformer architecture
+
+Temporal-Location Transformer: Transformer encoder with additive temporal and location encodings for sequence classification.
+
+```mermaid
+flowchart TB
+    subgraph inputs [Inputs]
+        X["X: (N,T,C)"]
+        W["week: (T)"]
+        L["loc: (N,2) [lat; lon]"]
+    end
+
+    subgraph proj [SpectralProjection]
+        Lin["Linear C to d_model"]
+        ReLU1["ReLU"]
+    end
+
+    subgraph metaEnc [MetadataEncoders]
+        subgraph tempEnc [TemporalEncoding]
+            Wenc["SinCosEncoding d_model"]
+            Wscale["temporal_scale (learnable)"]
+        end
+        subgraph locEnc [LocationEncoding]
+            Lenc["SinCosEncoding d_model"]
+            Lsum["lat_enc + lon_enc"]
+            Lscale["location_scale (learnable)"]
+        end
+    end
+
+    subgraph encoder [TransformerEncoderBlock]
+        Transpose1["Transpose N,T,D to T,N,D"]
+        TE["TransformerEncoder (n_layers, n_head)"]
+        Transpose2["Transpose T,N,D to N,T,D"]
+    end
+
+    subgraph head [PoolingAndHead]
+        MaxPool["MaxPool over time (dim=1)"]
+        ReLU2["ReLU"]
+        LinOut["Linear d_model to num_classes"]
+        LogSoftmax["LogSoftmax dim=-1"]
+    end
+
+    Y["log-probabilities: (N,num_classes)"]
+
+    X --> Lin --> ReLU1 -->|"X_proj N,T,d_model"| TempAdd
+    W --> Wenc --> Wscale -->|"add temporal_emb"| TempAdd
+    L --> Lenc --> Lsum --> Lscale -->|"add loc_emb broadcast over T"| LocAdd
+
+    TempAdd["add temporal_emb"] --> LocAdd["add loc_emb"] --> Transpose1
+    Transpose1 --> TE --> Transpose2 --> MaxPool --> ReLU2 --> LinOut --> LogSoftmax --> Y
+```
+
 ## Roadmap
 
 Future iterations from [the spec](prompts/crop-ml-api_spec.md):
