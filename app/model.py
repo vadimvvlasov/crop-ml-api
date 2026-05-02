@@ -6,6 +6,7 @@ import numpy as np
 import torch
 
 from .hls_preprocess import interpolate_features_ntc
+from .schemas import N_CHANNELS, T_TIMESTEPS
 
 # Mirror of the pickle-time module path `src.models.transformer_model`.
 # Importing it ensures `torch.load` (full pickle, not state_dict) can resolve
@@ -42,6 +43,10 @@ def predict(
     device = next(model.parameters()).device
 
     filled = interpolate_features_ntc(np.asarray(features, dtype=np.float32))
+    if filled.ndim != 3 or filled.shape[1:] != (T_TIMESTEPS, N_CHANNELS):
+        raise ValueError(
+            f"features must reshape to (N, {T_TIMESTEPS}, {N_CHANNELS}), got {filled.shape}"
+        )
     x = torch.as_tensor(filled, dtype=torch.float32, device=device) * NORMALIZATION_FACTOR
     week = torch.as_tensor(week_of_year, dtype=torch.float32, device=device)
     loc = torch.as_tensor(location, dtype=torch.float32, device=device)
