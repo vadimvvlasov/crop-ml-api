@@ -35,5 +35,7 @@ def predict_endpoint(req: PredictRequest) -> PredictResponse:
 @app.post("/predict/demo", response_model=PredictResponse)
 def predict_demo(n: int = 2) -> PredictResponse:
     data = make_sample(n)
-    class_ids, probas = predict(data["features"], data["week_of_year"], data["location"])
+    class_ids, probas = predict(
+        data["features"], data["week_of_year"], data["location"]
+    )
     return _to_response(class_ids, probas)
