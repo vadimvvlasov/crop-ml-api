@@ -1,0 +1,90 @@
+{
+  "source_npz": "/home/vadim/work/agro-mon/repos/research-crops/dags/data/hls/interim/hls_output_2024_Rio-Grande-do-Sul_32722_avg_241020_brazil-241001-250331/features_combined_output_2024_Rio-Grande-do-Sul_32722_avg_241020_brazil-241001-250331.npz",
+  "source_gpkg": "/home/vadim/work/agro-mon/repos/research-crops/dags/data/hls/interim/hls_output_2024_Rio-Grande-do-Sul_32722_avg_241020_brazil-241001-250331/output_2024_Rio-Grande-do-Sul_32722_avg_241020_brazil.gpkg",
+  "classmapping_eval": "/home/vadim/work/agro-mon/repos/research-crops/dags/data/hls/external/classmapping_eval.csv",
+  "n_exported": 10,
+  "week_note": "ISO week from NPZ week strings (YYMMDD-YYMMDD), first token",
+  "preprocess_note": "NaNs interpolated like research-crops HLSStitchedDataset (before API normalization)",
+  "samples": [
+    {
+      "batch_index": 0,
+      "npz_axis1_index": 0,
+      "field_id": "cf999fe23a4f12ae9975912e43a89b48bda8dc1dec8a1043bf0f9a3c4cf043d5",
+      "crop_class": "Soybeans",
+      "eval_class_id": 0,
+      "eval_class_name": "Soybean"
+    },
+    {
+      "batch_index": 1,
+      "npz_axis1_index": 1,
+      "field_id": "102bb11bed98c6b885c399738e5001834f4e4037deef562cd63b4a14ac255b92",
+      "crop_class": "Other",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 2,
+      "npz_axis1_index": 3055,
+      "field_id": "93d8a5e568cfc6006b74d1d5669d319c5650a4018374d4b70f33e8b1622e561e",
+      "crop_class": "Rice",
+      "eval_class_id": 3,
+      "eval_class_name": "Rice"
+    },
+    {
+      "batch_index": 3,
+      "npz_axis1_index": 55,
+      "field_id": "2d5d086f857b3e997d43eaecf5e1f4e3ddc77f1af6a1efaa424002c0cd77fcbd",
+      "crop_class": "Forest Plantation",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 4,
+      "npz_axis1_index": 4,
+      "field_id": "aa400d3b0f8127bef5377a4ea2b7e7ad32380b646379c1d37c12531d4af45993",
+      "crop_class": "Pasture",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 5,
+      "npz_axis1_index": 2,
+      "field_id": "36cd5569a0481e16b895ce2fd1d0d49cc64188a36e5655ac1ed8381e5a4a861e",
+      "crop_class": "Other",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 6,
+      "npz_axis1_index": 3,
+      "field_id": "781a4c7d4fc451ee447fee231419e84f498cf1fad9511cf95623b64b1cb90fde",
+      "crop_class": "Other",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 7,
+      "npz_axis1_index": 5,
+      "field_id": "c5dc0874cc9c857099fd377529d843c47ca1a63f4cc227f930fedfc6f8d6e13b",
+      "crop_class": "Other",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 8,
+      "npz_axis1_index": 6,
+      "field_id": "9108a92f09459c0f9ed619c050cc03afde571cd6a1050a051ab9724793f6d3a3",
+      "crop_class": "Other",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    },
+    {
+      "batch_index": 9,
+      "npz_axis1_index": 7,
+      "field_id": "0b2646480b24212e6dccd444faee18062c4969f3cfca340a362494b949770c02",
+      "crop_class": "Other",
+      "eval_class_id": 2,
+      "eval_class_name": "Other"
+    }
+  ]
+}

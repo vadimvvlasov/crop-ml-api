@@ -2,7 +2,10 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Sequence, Tuple
 
+import numpy as np
 import torch
+
+from .hls_preprocess import interpolate_features_ntc
 
 # Mirror of the pickle-time module path `src.models.transformer_model`.
 # Importing it ensures `torch.load` (full pickle, not state_dict) can resolve
@@ -38,7 +41,8 @@ def predict(
     model = get_model()
     device = next(model.parameters()).device
 
-    x = torch.as_tensor(features, dtype=torch.float32, device=device) * NORMALIZATION_FACTOR
+    filled = interpolate_features_ntc(np.asarray(features, dtype=np.float32))
+    x = torch.as_tensor(filled, dtype=torch.float32, device=device) * NORMALIZATION_FACTOR
     week = torch.as_tensor(week_of_year, dtype=torch.float32, device=device)
     loc = torch.as_tensor(location, dtype=torch.float32, device=device)
 

@@ -5,6 +5,7 @@ requires-python = ">=3.11"
 dependencies = [
     "fastapi==0.115.0",
     "numpy==1.26.4",
+    "pandas>=2.2.3,<3",
     "pydantic==2.9.2",
     "torch==2.4.1",
     "uvicorn[standard]==0.30.6",
