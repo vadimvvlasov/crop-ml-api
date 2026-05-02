@@ -1,0 +1,25 @@
+[project]
+name = "crop-ml-api"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.115.0",
+    "numpy==1.26.4",
+    "pydantic==2.9.2",
+    "torch==2.4.1",
+    "uvicorn[standard]==0.30.6",
+]
+
+# CPU-only torch: 1.2 MB model is CPU-friendly, skip ~2 GB of CUDA wheels.
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[dependency-groups]
+dev = [
+    "shapely>=2.1.2",
+]
