@@ -50,7 +50,7 @@
     - При необработанном исключении: логировать ERROR с `request_id`, `exc_type`, `exc_message`, затем пробрасывать исключение дальше
     - _Требования: 2.2, 2.3, 2.5, 3.5, 3.7_
 
-- [ ] 5. Рефакторинг `app/model.py`: убрать `lru_cache`, добавить `load_model()`
+- [x] 5. Рефакторинг `app/model.py`: убрать `lru_cache`, добавить `load_model()`
   - Удалить декоратор `@lru_cache(maxsize=1)` и функцию `get_model()`
   - Добавить функцию `load_model() -> torch.nn.Module`: проверяет существование `MODEL_PATH`, загружает модель через `torch.load(..., weights_only=False)`, вызывает `model.eval()`, возвращает модель
   - Обновить сигнатуру `predict()`: добавить параметр `model: torch.nn.Module` (явная передача вместо глобального кэша)
