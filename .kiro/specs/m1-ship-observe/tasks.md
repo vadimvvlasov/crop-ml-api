@@ -30,7 +30,7 @@
     - Перехватывать stdout через `logging.StreamHandler(io.StringIO)`, вызывать `logger.info(message, extra=extra_fields)`, парсить вывод через `json.loads`
     - Тег: `# Feature: m1-ship-observe, Property 1: каждая запись лога — валидный JSON`
 
-- [ ] 3. Создать модуль Prometheus-метрик `app/core/metrics.py`
+- [x] 3. Создать модуль Prometheus-метрик `app/core/metrics.py`
   - Создать явный `CollectorRegistry()` (не глобальный `REGISTRY`) — изолирует метрики для тестирования
   - Определить `http_requests_total` (Counter, метки: `method`, `path`, `status_code`)
   - Определить `http_request_duration_seconds` (Histogram, метки: `method`, `path`)
