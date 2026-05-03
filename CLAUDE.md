@@ -21,9 +21,9 @@ RESEARCH_CROPS_ROOT=/path/to/research-crops uv run python scripts/export_rs_hls_
 curl -sf -X POST -H "Content-Type: application/json" \
   -d @fixtures/rs_hls_predict_request.json http://localhost:8000/predict | jq
 
-# Run tests
-uv run pytest tests/ -v
 ```
+
+No test suite yet. M1 will add pytest.
 
 ## Architecture
 
@@ -80,3 +80,32 @@ Skills/prompts in `prompts/`. Each milestone has plan-mode paste in README.md.
 | M4 | LLM explainer, prompt versioning, circuit breaker, CI/CD |
 
 Branch naming: `feature/m1-observability`, `feature/m2-persistence`, etc.
+
+## Verification
+
+```bash
+# Health check
+curl -s http://localhost:8000/health
+
+# Demo predict
+curl -s -X POST http://localhost:8000/predict/demo | jq
+
+# Full fixture smoke test (expect 10 predictions, finite probas)
+curl -s http://localhost:8000/sample > /tmp/payload.json
+curl -sf -X POST -H "Content-Type: application/json" \
+  -d @fixtures/rs_hls_predict_request.json http://localhost:8000/predict | jq '.predictions | length'
+```
+
+OpenAPI UI: http://localhost:8000/docs
+
+## M0 Exit Checklist
+
+- `/health` returns 200
+- `/predict` with fixture returns 10 predictions
+- No `NaN` in fixture JSON (`export` uses `allow_nan=False`)
+
+## RS Fixture Details
+
+Regenerated from `research-crops` (Rio Grande do Sul bundle). `crop_class` from GPKG mapped via `classmapping_eval.csv`; `Pasture` / `Forest Plantation` → `Other` (class_id=2).
+
+Quick win for M1: replace `lru_cache` with FastAPI `lifespan` so model warms at startup (load errors surface on boot, not first request).
