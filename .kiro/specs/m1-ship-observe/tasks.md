@@ -94,8 +94,8 @@
     - Перехватывать лог-записи через `caplog` или кастомный хендлер, проверять наличие полей `request_id`, `method`, `path`, `status_code`, `duration_ms`
     - Тег: `# Feature: m1-ship-observe, Property 3: лог запроса содержит все обязательные поля`
 
-- [ ] 9. Написать тесты `tests/test_predict_contract.py`
-  - [ ] 9.1 Написать примерные тесты regression для fixture payload
+- [x] 9. Написать тесты `tests/test_predict_contract.py`
+  - [x] 9.1 Написать примерные тесты regression для fixture payload
     - `test_fixture_predict_count`: fixture payload (N=10) возвращает ровно 10 predictions
     - `test_fixture_predict_proba_finite`: все `proba` из fixture конечны (`math.isfinite`)
     - `test_predict_422_wrong_timesteps`: features с неверным числом timesteps → 422
