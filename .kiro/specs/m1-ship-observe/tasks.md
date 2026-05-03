@@ -12,11 +12,11 @@
   - Убедиться, что `uv.lock` обновлён после добавления зависимостей
   - _Требования: 3.1, 3.2, 3.3, 3.4_
 
-- [ ] 2. Создать модуль структурированного логирования `app/core/`
-  - [ ] 2.1 Создать `app/core/__init__.py` (пустой файл-маркер пакета)
+- [-] 2. Создать модуль структурированного логирования `app/core/`
+  - [x] 2.1 Создать `app/core/__init__.py` (пустой файл-маркер пакета)
     - _Требования: 2.1, 2.4_
 
-  - [ ] 2.2 Создать `app/core/logging.py` с функциями `configure_logging()` и `get_logger()`
+  - [x] 2.2 Создать `app/core/logging.py` с функциями `configure_logging()` и `get_logger()`
     - Реализовать `configure_logging()`: читает `LOG_LEVEL` из env (fallback `"info"`), настраивает корневой логгер с `JsonFormatter` из `pythonjsonlogger`
     - Форматтер: `fmt="%(asctime)s %(name)s %(levelname)s %(message)s"`, `rename_fields={"levelname": "level", "asctime": "timestamp"}`
     - `root.handlers.clear()` перед добавлением нового хендлера — предотвращает дублирование при повторном вызове
