@@ -10,13 +10,18 @@ This iteration covers Week 1 (MVP) only — see [prompts/crop-ml-api_spec.md](pr
 
 ```
 app/
-  main.py        # FastAPI app + 4 routes
-  model.py       # lru_cache loader + predict()
-  schemas.py     # Pydantic Request/Response
-  sample.py      # random rows from fixtures/rs_hls_predict_request.json
-src/models/      # pickle-path mirror so torch.load resolves TransformerModel
-models/          # weights (.pt)
-prompts/         # source spec + minimal-project spec
+  main.py              # FastAPI app + lifespan warmup + /metrics endpoint
+  model.py             # load_model() + predict()
+  schemas.py           # Pydantic Request/Response
+  sample.py            # random rows from fixtures/rs_hls_predict_request.json
+  core/
+    logging.py         # JSON structured logging (configure_logging, get_logger)
+    metrics.py         # Prometheus registry (http_requests_total, durations)
+  api/
+    middleware.py      # ObservabilityMiddleware — request_id, logs, metrics
+src/models/            # pickle-path mirror so torch.load resolves TransformerModel
+models/                # weights (.pt)
+prompts/               # source spec + minimal-project spec
 ```
 
 The `src/models/transformer_model.py` mirror is required because the model
@@ -31,18 +36,48 @@ See [NOTICE](NOTICE) for details.
 
 ## Run
 
+### Local (uv)
+
 ```bash
 uv sync
 uv run uvicorn app.main:app --reload --port 8000
 ```
 
-## Verify
+### Docker Compose
 
 ```bash
-curl -s http://localhost:8000/health
+docker compose up --build
+```
+
+## Verify
+
+**Health check:**
+
+```bash
+curl -sf http://localhost:8000/health
+```
+
+Expected: `{"status":"ok"}`
+
+**Fixture contract (expect `10` predictions):**
+
+```bash
+curl -sf -X POST -H "Content-Type: application/json" \
+  -d @fixtures/rs_hls_predict_request.json http://localhost:8000/predict | jq '.predictions | length'
+```
+
+Expected: `10` with all `proba` values finite.
+
+**Prometheus metrics:**
+
+```bash
+curl -s http://localhost:8000/metrics | head -20
+```
+
+**Demo endpoint:**
+
+```bash
 curl -s -X POST http://localhost:8000/predict/demo | jq
-curl -s http://localhost:8000/sample > payload.json
-curl -s -X POST -H "Content-Type: application/json" -d @payload.json http://localhost:8000/predict | jq
 ```
 
 OpenAPI UI: <http://localhost:8000/docs>.
@@ -130,10 +165,6 @@ OpenTelemetry, structlog, Prometheus `/metrics`, LLM explainer with
 prompt versioning + cost tracking + fallback, Caddy + Docker compose,
 GitHub Actions CI/CD, load tests.
 
-Quick win for next step: replace `lru_cache` with FastAPI `lifespan` so
-the model is warmed up at startup (load errors surface on boot, not on
-first request).
-
 ---
 
 ## Milestone plan (fixture contract)
@@ -175,16 +206,23 @@ Plan-mode prompts:
 
 ### M1 — Ship + observe (spec “Week 1” remainder)
 
-**Goal:** Image + compose dev stack; model on **lifespan** (fail fast at boot); structured JSON logs; **`GET /metrics`** (Prometheus); optional VPS + HTTPS stub.
+**Done:** Dockerfile (non-root, `python:3.11-slim`, `uv sync --frozen --no-dev`); `docker-compose.yml` with volume-mounted weights, `LOG_LEVEL` env, and healthcheck; FastAPI `lifespan` loads model into `app.state` (fail-fast on missing weights, replaces `lru_cache`); `app/core/logging.py` — JSON structured logs via `python-json-logger`; `app/core/metrics.py` — Prometheus registry with `http_requests_total`, `http_request_duration_seconds`, `inference_duration_seconds`; `app/api/middleware.py` — `ObservabilityMiddleware` adds `X-Request-ID` header, logs every request, records metrics; `GET /metrics` endpoint.
 
-**Plan mode paste:**
+**M1 exit checklist:**
 
-```
-Milestone M1 crop-ml-api: From current repo state (FastAPI predict + fixtures/rs_hls_predict_request.json).
-Add: Dockerfile (non-root), docker-compose (api + deps minimal), FastAPI lifespan to load model once, replace lru_cache.
-Add: structlog JSON logs with request id; prometheus_client /metrics on separate route or admin mount.
-Acceptance: curl fixture to /predict returns 10 finite probas; docker compose up works; /metrics returns text; model load error fails container start not first request.
-Do not change predict tensor contract (N,26,15).
+```bash
+# Health
+curl -sf http://localhost:8000/health
+
+# Fixture contract — expect 10
+curl -sf -X POST -H "Content-Type: application/json" \
+  -d @fixtures/rs_hls_predict_request.json http://localhost:8000/predict | jq '.predictions | length'
+
+# Metrics
+curl -s http://localhost:8000/metrics | head -20
+
+# Docker Compose
+docker compose up --build
 ```
 
 ---
