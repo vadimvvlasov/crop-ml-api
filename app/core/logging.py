@@ -1,7 +1,7 @@
 import logging
 import os
 
-from pythonjsonlogger import jsonlogger
+from pythonjsonlogger import json as jsonlogger
 
 
 def configure_logging() -> None:
