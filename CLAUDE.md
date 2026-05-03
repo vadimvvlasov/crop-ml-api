@@ -20,9 +20,10 @@ RESEARCH_CROPS_ROOT=/path/to/research-crops uv run python scripts/export_rs_hls_
 # Smoke test
 curl -sf -X POST -H "Content-Type: application/json" \
   -d @fixtures/rs_hls_predict_request.json http://localhost:8000/predict | jq
-```
 
-No test suite yet. M1 will add pytest.
+# Run tests
+uv run pytest tests/ -v
+```
 
 ## Architecture
 
