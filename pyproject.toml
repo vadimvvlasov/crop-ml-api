@@ -7,7 +7,9 @@ dependencies = [
     "fastapi==0.115.0",
     "numpy==1.26.4",
     "pandas>=2.2.3,<3",
+    "prometheus-client>=0.25.0",
     "pydantic==2.9.2",
+    "python-json-logger>=4.1.0",
     "torch==2.4.1",
     "uvicorn[standard]==0.30.6",
 ]
@@ -24,6 +26,7 @@ explicit = true
 [dependency-groups]
 dev = [
     "httpx>=0.27",
+    "hypothesis>=6.100",
     "pytest>=8.0",
     "shapely>=2.1.2",
 ]

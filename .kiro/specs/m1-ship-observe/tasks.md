@@ -6,7 +6,7 @@
 
 ## Задачи
 
-- [ ] 1. Добавить зависимости в `pyproject.toml`
+- [x] 1. Добавить зависимости в `pyproject.toml`
   - Добавить `prometheus-client` и `python-json-logger` в секцию `dependencies` через `uv add prometheus-client python-json-logger`
   - Добавить `hypothesis>=6.100` в `[dependency-groups] dev` через `uv add --dev "hypothesis>=6.100"`
   - Убедиться, что `uv.lock` обновлён после добавления зависимостей
