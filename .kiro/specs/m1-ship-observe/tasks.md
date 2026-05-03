@@ -71,8 +71,8 @@
   - Если тесты падают — исправить до перехода к следующему этапу
   - _Требования: 6.1, 6.2, 6.3, 6.4, 6.5_
 
-- [ ] 8. Написать тесты `tests/test_health.py`
-  - [ ] 8.1 Написать примерные тесты для health endpoint и X-Request-ID
+- [x] 8. Написать тесты `tests/test_health.py`
+  - [x] 8.1 Написать примерные тесты для health endpoint и X-Request-ID
     - `test_health_returns_ok`: `GET /health` возвращает `{"status": "ok"}` со статусом 200
     - `test_health_has_request_id_header`: ответ содержит заголовок `X-Request-ID`
     - `test_request_id_is_uuid4`: значение `X-Request-ID` — валидный UUID v4 (проверить через `uuid.UUID(value, version=4)`)
