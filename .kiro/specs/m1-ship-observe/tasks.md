@@ -57,7 +57,7 @@
   - Внутри `predict()` убрать вызов `get_model()`, использовать переданный `model`
   - _Требования: 1.1, 1.2, 1.3, 1.5_
 
-- [ ] 6. Обновить `app/main.py`: lifespan, middleware, `/metrics`
+- [x] 6. Обновить `app/main.py`: lifespan, middleware, `/metrics`
   - Добавить `asynccontextmanager lifespan(app)`: вызвать `configure_logging()` первым, затем `load_model()` → `app.state.model`; логировать INFO `event="model_loaded"` с путём к файлу весов; `FileNotFoundError` не перехватывать
   - Передать `lifespan=lifespan` в конструктор `FastAPI(...)`
   - Зарегистрировать `app.add_middleware(ObservabilityMiddleware)`
