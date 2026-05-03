@@ -25,7 +25,7 @@ NORMALIZATION_FACTOR = 0.7e-4
 
 
 def load_model() -> torch.nn.Module:
-    """Загружает модель с диска. Вызывается один раз в lifespan."""
+    """Load model weights from disk. Called once during application lifespan."""
     if not MODEL_PATH.exists():
         raise FileNotFoundError(f"Model weights not found: {MODEL_PATH}")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

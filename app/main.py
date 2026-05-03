@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     configure_logging()
-    app.state.model = load_model()  # FileNotFoundError → процесс падает
+    app.state.model = load_model()  # FileNotFoundError → process exits
     logger.info(
         "model_loaded",
         extra={"event": "model_loaded", "model_path": str(MODEL_PATH)},
