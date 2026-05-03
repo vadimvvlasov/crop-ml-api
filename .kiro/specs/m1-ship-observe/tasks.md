@@ -38,11 +38,11 @@
   - Экспортировать `registry`, `generate_latest`, `CONTENT_TYPE_LATEST` для использования в `main.py`
   - _Требования: 3.1, 3.2, 3.3, 3.4_
 
-- [ ] 4. Создать ASGI-middleware `app/api/middleware.py`
-  - [ ] 4.1 Создать `app/api/__init__.py` (пустой файл-маркер пакета)
+- [x] 4. Создать ASGI-middleware `app/api/middleware.py`
+  - [x] 4.1 Создать `app/api/__init__.py` (пустой файл-маркер пакета)
     - _Требования: 2.2, 2.3, 3.5_
 
-  - [ ] 4.2 Создать `app/api/middleware.py` с классом `ObservabilityMiddleware(BaseHTTPMiddleware)`
+  - [x] 4.2 Создать `app/api/middleware.py` с классом `ObservabilityMiddleware(BaseHTTPMiddleware)`
     - Метод `dispatch`: генерировать `request_id = str(uuid.uuid4())`, замерять время через `time.perf_counter()`
     - После получения ответа: логировать INFO с полями `request_id`, `method`, `path`, `status_code`, `duration_ms`
     - Инкрементировать `http_requests_total` и записывать в `http_request_duration_seconds` для всех путей кроме `EXCLUDED_PATHS = {"/metrics"}`
