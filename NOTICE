@@ -1,0 +1,10 @@
+NOTICE
+
+This repository is licensed under the MIT License (see LICENSE).
+
+Model weights (models/*.pt) are NOT covered by this license.
+They are proprietary assets belonging to their respective owners
+and are excluded from this repository. Do not redistribute them.
+
+To run inference locally, obtain the weights separately and place
+the .pt file in the models/ directory.

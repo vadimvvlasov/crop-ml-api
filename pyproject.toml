@@ -2,6 +2,7 @@
 name = "crop-ml-api"
 version = "0.1.0"
 requires-python = ">=3.11"
+license = { text = "MIT" }
 dependencies = [
     "fastapi==0.115.0",
     "numpy==1.26.4",

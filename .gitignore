@@ -10,3 +10,6 @@ __pycache__/
 .DS_Store
 
 prompts/
+
+# Model weights are proprietary — do not commit
+models/*.pt

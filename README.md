@@ -1,5 +1,7 @@
 # crop-ml-api
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 MVP FastAPI inference service for the HLS Transformer crop classifier (Soybean / Corn / Rice / Other).
 
 This iteration covers Week 1 (MVP) only — see [prompts/crop-ml-api_spec.md](prompts/crop-ml-api_spec.md) for the full roadmap (Postgres, Redis, AsyncBatcher, OTel, LLM explainer, Caddy/CI deploy).
@@ -20,6 +22,12 @@ prompts/         # source spec + minimal-project spec
 The `src/models/transformer_model.py` mirror is required because the model
 is saved as a full pickle (`torch.load(weights_only=False)`) and embeds the
 fully-qualified class path `src.models.transformer_model.TransformerModel`.
+
+## Model weights
+
+Weights (`models/*.pt`) are **not included** in this repository — they are proprietary assets belonging to their respective owners. To run inference locally, obtain the `.pt` file separately and place it in `models/`.
+
+See [NOTICE](NOTICE) for details.
 
 ## Run
 
