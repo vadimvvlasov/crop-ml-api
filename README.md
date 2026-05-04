@@ -109,6 +109,14 @@ Returns log-softmax → `class_id` + `class_name` + `proba` per row.
 
 Temporal-Location Transformer: Transformer encoder with additive temporal and location encodings for sequence classification.
 
+Adding sinusoidal week-of-year and lat/lon encodings (summed with spectral embeddings after projection, with a learnable scale initialised at 0.1) improved macro F1 from 0.81 → 0.86 (+6.2%) and overall accuracy from 91% → 93% vs the plain Transformer. The largest gains were on the hardest classes: Corn +8.3% F1, Rice +7.3%, Other +9.7%. Early stopping on macro F1 gave the best per-class balance — that checkpoint is the current production weight (`hls_TL_dinner1024_nhead2_nlayers5_260311_1423.pt`).
+
+| Metric           | Transformer | TL-Transformer | Δ     |
+|------------------|:-----------:|:--------------:|:-----:|
+| Overall accuracy | 0.91        | 0.93           | +2.2% |
+| Cohen's kappa    | 0.74        | 0.81           | +9.5% |
+| Macro F1         | 0.81        | 0.86           | +6.2% |
+
 ```mermaid
 flowchart TB
     subgraph inputs [Inputs]
